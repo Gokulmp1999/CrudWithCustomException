@@ -1,6 +1,7 @@
 package com.interview.demo.service;
 
 import com.interview.demo.customexception.BussinessException;
+import com.interview.demo.customexception.EmptyInputException;
 import com.interview.demo.entity.Employe;
 import com.interview.demo.repository.EmplRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class EmplService implements EmplServiceInterface {
     @Override
     public Employe saveEmploye(Employe employe) {
         if (employe.getName()==null ||employe.getName().isEmpty() || employe.getName().length() == 0 ) {
-            throw new BussinessException("601", "employe name is null");
+            throw new EmptyInputException("601", "employe name is null");
         }
         try {
             return emplRepo.save(employe);
@@ -48,13 +49,13 @@ public class EmplService implements EmplServiceInterface {
 
     @Override
     public Employe findEmplById(Long id) {
-        try {
+//        try {
             return emplRepo.findById(id).get();
-        } catch (IllegalArgumentException e) {
-            throw new BussinessException("606", "Employe is Null ,please give Employe Id " + e.getMessage());
-        } catch (NoSuchElementException e) {
-            throw new BussinessException("607", "The give Employe id is Not present in Db " + e.getMessage());
-        }
+//        } catch (IllegalArgumentException e) {
+//            throw new BussinessException("606", "Employe is Null ,please give Employe Id " + e.getMessage());
+//        } catch (NoSuchElementException e) {
+//            throw new BussinessException("607", "The give Employe id is Not present in Db " + e.getMessage());
+//        }
 
     }
 

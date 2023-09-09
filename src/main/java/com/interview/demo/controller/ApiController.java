@@ -2,6 +2,7 @@ package com.interview.demo.controller;
 
 import com.interview.demo.customexception.BussinessException;
 import com.interview.demo.customexception.ControllerException;
+import com.interview.demo.customexception.EmptyInputException;
 import com.interview.demo.entity.Employe;
 import com.interview.demo.service.EmplServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,8 @@ public class ApiController {
 
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public ResponseEntity<?> getFindById(@RequestBody Employe employe) {
-        try {
-            Employe employeList = emplServiceInterface.saveEmploye(employe);
-            return new ResponseEntity<>(employeList, HttpStatus.CREATED);
-        } catch (BussinessException b) {
-            ControllerException ce = new ControllerException(b.getErrorCode(), b.getErrorMessage());
-            return new ResponseEntity<>(ce, HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            ControllerException ce = new ControllerException("611", e.getMessage());
-            return new ResponseEntity<>(ce, HttpStatus.BAD_REQUEST);
-        }
+        Employe employeList = emplServiceInterface.saveEmploye(employe);
+        return new ResponseEntity<>(employeList, HttpStatus.CREATED);
 
     }
 
@@ -39,10 +32,10 @@ public class ApiController {
         try {
             List<Employe> employeList = emplServiceInterface.getAllEmploy();
             return new ResponseEntity<>(employeList, HttpStatus.OK);
-        }catch (BussinessException b){
+        } catch (BussinessException b) {
             ControllerException ce = new ControllerException(b.getErrorCode(), b.getErrorMessage());
             return new ResponseEntity<>(ce, HttpStatus.BAD_REQUEST);
-        }catch (Exception e) {
+        } catch (Exception e) {
             ControllerException ce = new ControllerException("614", e.getMessage());
             return new ResponseEntity<>(ce, HttpStatus.BAD_REQUEST);
         }
@@ -54,10 +47,10 @@ public class ApiController {
         try {
             Employe employeList = emplServiceInterface.saveEmploye(employe);
             return new ResponseEntity<>(employeList, HttpStatus.CREATED);
-        }catch (BussinessException b){
+        } catch (BussinessException b) {
             ControllerException ce = new ControllerException(b.getErrorCode(), b.getErrorMessage());
             return new ResponseEntity<>(ce, HttpStatus.BAD_REQUEST);
-        }catch (Exception e) {
+        } catch (Exception e) {
             ControllerException ce = new ControllerException("615", e.getMessage());
             return new ResponseEntity<>(ce, HttpStatus.BAD_REQUEST);
         }
@@ -81,17 +74,7 @@ public class ApiController {
 
     @RequestMapping(value = "findById/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getFindById(@PathVariable Long id) {
-        try {
-            Employe employeList = emplServiceInterface.findEmplById(id);
-            return new ResponseEntity<>(employeList, HttpStatus.OK);
-        } catch (BussinessException b) {
-            ControllerException ce = new ControllerException(b.getErrorCode(), b.getErrorMessage());
-            return new ResponseEntity<>(ce, HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            ControllerException ce = new ControllerException("613", e.getMessage());
-            return new ResponseEntity<>(ce, HttpStatus.BAD_REQUEST);
-        }
-
-
+        Employe employeList = emplServiceInterface.findEmplById(id);
+        return new ResponseEntity<>(employeList, HttpStatus.OK);
     }
 }
