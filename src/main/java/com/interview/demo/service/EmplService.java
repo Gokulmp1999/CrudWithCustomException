@@ -3,6 +3,8 @@ package com.interview.demo.service;
 import com.interview.demo.customexception.BussinessException;
 import com.interview.demo.entity.Employe;
 import com.interview.demo.repository.EmplRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import java.util.NoSuchElementException;
 
 @Service
 public class EmplService implements EmplServiceInterface {
+
+    Logger logger= LoggerFactory.getLogger(EmplService.class);
     @Autowired
     EmplRepo emplRepo;
 
@@ -35,11 +39,15 @@ public class EmplService implements EmplServiceInterface {
     public List<Employe> getAllEmploy() {
         List<Employe> employeList = null;
         try {
+            logger.info("Starting gett all employ method from service with info level");
             employeList = emplRepo.findAll();
+            logger.info("ended gett all employ method from service with info level");
         } catch (Exception e) {
+            logger.error("throwned Exception after calling gett all employ method from service with error level");
             throw new BussinessException("605", "Something went wrong in Service layer while fetching Employe " + e.getMessage());
         }
         if (employeList.isEmpty()) {
+            logger.error("throwned Exception after returning employeList  from service with error level");
             throw new BussinessException("604", "Hey List is Empty");
         }
 
